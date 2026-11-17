@@ -1,0 +1,38 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+
+# Node
+/node_modules
+npm-debug.log
+
+# IDEs and editors
+.idea/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/test-results
+/playwright-report
+/.angular/cache
+/coverage
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Local only: Claude Code configuration and the personal manual
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+manual/
+
