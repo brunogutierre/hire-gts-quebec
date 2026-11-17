@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import localeFrCa from '@angular/common/locales/fr-CA';
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
@@ -13,6 +15,9 @@ async function render(locale = 'en') {
   await fixture.whenStable();
   return fixture.nativeElement as HTMLElement;
 }
+
+// The French build gets its locale data from @angular/localize; unit tests register it.
+registerLocaleData(localeFrCa);
 
 describe('App shell', () => {
   it('renders the header, the page and the footer', async () => {
