@@ -57,3 +57,8 @@ export const CURRENT_LOCALE = new InjectionToken<Locale>('CURRENT_LOCALE', {
   providedIn: 'root',
   factory: () => toLocale(inject(LOCALE_ID)),
 });
+
+/** The value of a `Localized` constant for the running build. Call in an injection context. */
+export function injectLocalized<T>(content: Localized<T>): T {
+  return content[inject(CURRENT_LOCALE)];
+}
