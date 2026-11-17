@@ -1,1 +1,7 @@
 // Global styles: the "Canopy" design system of the owner's personal site.
+// Component styles @use 'breakpoints' only.
+@use 'styles/tokens';
+@use 'styles/fonts';
+@use 'styles/base';
+@use 'styles/buttons';
+@use 'styles/layout';
