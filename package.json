@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:dist": "node scripts/check-dist.mjs dist/hire-gts-quebec/browser",
-    "test:scripts": "node --test 'scripts/**/*.test.mjs'"
+    "test:scripts": "node --test 'scripts/**/*.test.mjs'",
+    "e2e": "tsc -p tsconfig.e2e.json && playwright test"
   },
   "private": true,
   "packageManager": "npm@11.17.0",
@@ -36,7 +37,9 @@
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.0",
     "@angular/localize": "^22.2.5",
+    "@axe-core/playwright": "4.14.0",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.64.1",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.1.0",
     "angular-eslint": "^22.6.0",
@@ -49,5 +52,8 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "overrides": {
+    "playwright-core": "$@playwright/test"
   }
 }
