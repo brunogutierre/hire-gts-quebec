@@ -13,7 +13,9 @@
     "test:ci": "npm test -- --coverage",
     "lint": "ng lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check:dist": "node scripts/check-dist.mjs dist/hire-gts-quebec/browser",
+    "test:scripts": "node --test 'scripts/**/*.test.mjs'"
   },
   "private": true,
   "packageManager": "npm@11.17.0",
