@@ -1,0 +1,70 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; never cancel a deployment that is already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  SITE_DIR: dist/hire-gts-quebec/browser
+  SITE_URL: https://brunogutierre.github.io/hire-gts-quebec
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Check the built site
+        run: npm run check:dist
+      # The artifact root is served at /hire-gts-quebec/.
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ env.SITE_DIR }}
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Only this job can publish; the build job (which runs dependency install scripts) cannot.
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  verify:
+    name: Verify the live site
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Page in every language
+        run: |
+          for path in / /fr/; do
+            curl --fail --silent --show-error --output /dev/null --max-time 20 \
+              --retry 20 --retry-delay 15 --retry-all-errors "$SITE_URL$path"
+            echo "OK: $SITE_URL$path"
+          done

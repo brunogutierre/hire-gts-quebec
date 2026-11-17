@@ -30,4 +30,10 @@ module.exports = defineConfig([
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
   },
+  {
+    // Dependency-free Node scripts (build checks).
+    files: ['scripts/**/*.mjs'],
+    extends: [eslint.configs.recommended],
+    languageOptions: { globals: { process: 'readonly', console: 'readonly', URL: 'readonly' } },
+  },
 ]);
