@@ -128,7 +128,9 @@
             "lintFilePatterns": [
               "src/**/*.ts",
               "src/**/*.html",
-              "scripts/**/*.mjs"
+              "scripts/**/*.mjs",
+              "e2e/**/*.ts",
+              "playwright.config.ts"
             ]
           }
         },
