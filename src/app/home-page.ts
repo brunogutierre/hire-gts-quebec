@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SeoService } from './core/seo/seo.service';
 import { FaqSection } from './sections/faq-section';
 import { HeroSection } from './sections/hero-section';
 import { MyCaseSection } from './sections/my-case-section';
@@ -49,4 +50,9 @@ import { WhySection } from './sections/why-section';
     }
   `,
 })
-export class HomePage {}
+export class HomePage {
+  constructor() {
+    // runs while prerendering: the head metadata is part of each static HTML file
+    inject(SeoService).apply();
+  }
+}
