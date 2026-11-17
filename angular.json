@@ -1,0 +1,145 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "schematicCollections": [
+      "angular-eslint"
+    ]
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "hire-gts-quebec": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "subPath": ""
+        },
+        "locales": {
+          "fr-CA": {
+            "translation": "src/locale/messages.fr-CA.json",
+            "subPath": "fr"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "static",
+            "polyfills": [
+              "@angular/localize/init"
+            ],
+            "i18nMissingTranslation": "error",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
+            "baseHref": "/hire-gts-quebec/"
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all",
+              "localize": true
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "fr": {
+              "localize": [
+                "fr-CA"
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "hire-gts-quebec:build:production"
+            },
+            "development": {
+              "buildTarget": "hire-gts-quebec:build:development"
+            },
+            "development-fr": {
+              "buildTarget": "hire-gts-quebec:build:development,fr"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "coverageInclude": [
+              "src/app/**/*.ts"
+            ],
+            "coverageExclude": [
+              "src/app/**/*.spec.ts"
+            ],
+            "coverageThresholds": {
+              "statements": 80,
+              "branches": 80,
+              "functions": 80,
+              "lines": 80
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "hire-gts-quebec:build",
+            "format": "json",
+            "outputPath": "src/locale"
+          }
+        }
+      }
+    }
+  }
+}
