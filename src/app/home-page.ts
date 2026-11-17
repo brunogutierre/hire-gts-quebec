@@ -1,17 +1,36 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CURRENT_LOCALE, Localized } from './core/i18n/locale';
-
-const TITLE: Localized<string> = {
-  en: 'Hire a closed-permit developer in Quebec',
-  'fr-CA': 'Embaucher un développeur au permis fermé au Québec',
-};
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HeroSection } from './sections/hero-section';
+import { StepsSection } from './sections/steps-section';
+import { WhySection } from './sections/why-section';
 
 /** The whole site: one page made of sections, reached through in-page anchors. */
 @Component({
   selector: 'app-home-page',
+  imports: [HeroSection, WhySection, StepsSection],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<h1>{{ title }}</h1>`,
+  template: `
+    <app-hero-section />
+    <div class="sections">
+      <app-why-section id="why" class="section" role="region" />
+      <app-steps-section id="steps" class="section" role="region" />
+    </div>
+  `,
+  styles: `
+    :host {
+      display: block;
+    }
+
+    .sections {
+      display: grid;
+      gap: var(--sp-9);
+      inline-size: min(100% - 2 * var(--page-pad), var(--content-max));
+      margin-inline: auto;
+      padding-block: var(--sp-9);
+    }
+
+    .section {
+      display: block;
+    }
+  `,
 })
-export class HomePage {
-  protected readonly title = TITLE[inject(CURRENT_LOCALE)];
-}
+export class HomePage {}
