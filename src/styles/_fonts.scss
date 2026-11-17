@@ -1,0 +1,49 @@
+// Self-hosted variable fonts from Fontsource 5.3.0 (public/fonts/, SIL Open Font License 1.1,
+// licenses next to the files). Latin subset only: it covers English and French.
+// Absolute URLs under the project path: both languages share one cached copy, the build leaves
+// them untouched, and they never reach the personal site that shares the origin.
+@use 'sass:list';
+
+$base: '/hire-gts-quebec/fonts/';
+$latin: 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+
+// family: (file prefix, axis of the file, weight range)
+$faces: (
+  'Bricolage Grotesque': (
+    'bricolage-grotesque',
+    'opsz',
+    200 800,
+  ),
+  'Inter': (
+    'inter',
+    'wght',
+    100 900,
+  ),
+  'JetBrains Mono': (
+    'jetbrains-mono',
+    'wght',
+    100 800,
+  ),
+);
+
+@each $family, $face in $faces {
+  @font-face {
+    font-family: $family;
+    font-style: normal;
+    font-weight: list.nth($face, 3);
+    font-display: swap;
+    src: url('#{$base}#{list.nth($face, 1)}-latin-#{list.nth($face, 2)}-normal.woff2')
+      format('woff2');
+    unicode-range: #{$latin};
+  }
+}
+
+// Metric-matched fallback: limits layout shift when Inter swaps in (against Arial metrics).
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 107.9%;
+  ascent-override: 89.8%;
+  descent-override: 22.4%;
+  line-gap-override: 0%;
+}
